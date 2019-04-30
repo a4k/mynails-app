@@ -43,7 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         View currentView;
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        currentView = (View) inflater.inflate(R.layout.master_row_item, viewGroup, false);
+        currentView = inflater.inflate(R.layout.master_row_item, viewGroup, false);
 
 
         return new MyViewHolder(currentView);
