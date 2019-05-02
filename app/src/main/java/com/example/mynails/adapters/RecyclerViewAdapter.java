@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mynails.R;
+import com.example.mynails.model.Config;
 import com.example.mynails.model.Master;
 
 import org.w3c.dom.Text;
@@ -25,10 +26,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private RequestOptions req_options;
 
+    private String api_host = "";
+
 
     public RecyclerViewAdapter(Context mContext, List<Master> masterData) {
         this.mContext = mContext;
         this.masterData = masterData;
+
+        Config config = new Config();
+        api_host = config.getApi_host();
 
 
         // Описание запросов для Glide
@@ -55,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         myViewHolder.master_title.setText(masterData.get(i).getName());
 
         // Подгрузка изображения
-        Glide.with(mContext).load(masterData.get(i).getImage()).apply(req_options).into(myViewHolder.master_image);
+        Glide.with(mContext).load(api_host + masterData.get(i).getImage()).apply(req_options).into(myViewHolder.master_image);
 
     }
 
