@@ -25,8 +25,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mynails.R;
 import com.example.mynails.adapters.MasterViewAdapter;
+import com.example.mynails.adapters.ServiceViewAdapter;
 import com.example.mynails.model.Config;
 import com.example.mynails.model.Master;
+import com.example.mynails.model.Service;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +44,9 @@ public class MasterDetail extends AppCompatActivity {
     private JsonObjectRequest request;
     private RequestQueue requestQueue;
     private RequestOptions req_options;
+
+    private List<Service> listServices;
+    private RecyclerView viewService;
 
     private Context mContext;
 
@@ -65,6 +70,9 @@ public class MasterDetail extends AppCompatActivity {
         title = (TextView) findViewById(R.id.item_detail_title);
         description = (TextView) findViewById(R.id.item_detail_text);
         item_image = (ImageView) findViewById(R.id.item_detail_image);
+
+        listServices = new ArrayList<>();
+        viewService = findViewById(R.id.serviceList);
 
 
         // Описание запросов для Glide
@@ -135,6 +143,31 @@ public class MasterDetail extends AppCompatActivity {
                     master.setDescription(response.getString("description"));
                     master.setImage(response.getString("image"));
 
+
+                    JSONObject jsonObject = null;
+                    JSONArray services = response.getJSONArray("services");
+
+                    for (int i = 0; i < services.length(); i++) {
+
+                        try {
+                            jsonObject = services.getJSONObject(i);
+                            Service service = new Service();
+                            service.setId(jsonObject.getInt("id"));
+                            service.setName(jsonObject.getString("name"));
+                            service.setPrice(jsonObject.getInt("price"));
+                            service.setTime(jsonObject.getInt("time"));
+
+                            listServices.add(service);
+
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    setUpRecyclerView(listServices);
+
                     title.setText(master.getName());
                     description.setText(master.getDescription());
 
@@ -163,6 +196,32 @@ public class MasterDetail extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(MasterDetail.this);
         requestQueue.add(request);
 
+    }
+
+
+    private void setUpRecyclerView(List<Service> list) {
+
+        ServiceViewAdapter.OnItemClickListener listener = new MasterDetail.BindListener();
+
+        ServiceViewAdapter myAdapter = new ServiceViewAdapter(this, list, listener);
+
+        viewService.setLayoutManager(new LinearLayoutManager(this));
+
+        viewService.setAdapter(myAdapter);
+
+    }
+
+
+    public class BindListener implements ServiceViewAdapter.OnItemClickListener {
+
+        @Override
+        public void onItemClick(Master item) {
+
+            int id = item.getId();
+
+
+
+        }
     }
 
 }
