@@ -89,8 +89,6 @@ public class MasterAll extends AppCompatActivity {
 
     private void jsonRequest(String url) {
 
-        String test = "test";
-
         request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -154,7 +152,7 @@ public class MasterAll extends AppCompatActivity {
 
             // Переход на страницу информации о мастере
             Intent masterDetailPage = new Intent(MasterAll.this, MasterDetail.class);
-            masterDetailPage.putExtra("id", masterDetailPage);
+            masterDetailPage.putExtra("id", id);
 
 
             startActivity(masterDetailPage);

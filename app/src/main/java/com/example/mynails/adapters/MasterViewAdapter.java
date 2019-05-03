@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,9 +61,15 @@ public class MasterViewAdapter extends RecyclerView.Adapter<MasterViewAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int position) {
 
         myViewHolder.item_title.setText(cardData.get(position).getName());
+        myViewHolder.action_view_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(cardData.get(position));
+            }
+        });
 
         myViewHolder.bind(cardData.get(position), listener);
 
@@ -82,20 +89,25 @@ public class MasterViewAdapter extends RecyclerView.Adapter<MasterViewAdapter.My
 
         TextView item_title;
         ImageView item_image;
+        Button action_view_btn;
 
-        public MyViewHolder(View itemView) {
+
+        public MyViewHolder(final View itemView) {
             super(itemView);
 
 
             item_title = (TextView) itemView.findViewById(R.id.item_title);
             item_image = (ImageView) itemView.findViewById(R.id.item_image);
+            action_view_btn = (Button) itemView.findViewById(R.id.action_view_btn);
+
 
         }
 
         public void bind(final Master item, final OnItemClickListener listener) {
 
             itemView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
 
                     listener.onItemClick(item);
 

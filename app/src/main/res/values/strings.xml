@@ -4,4 +4,6 @@
     <string name="main_slogan_title">Запишитесь онлайн</string>
     <string name="choose_master_text">Выбрать мастера</string>
     <string name="view_master_text">Посмотреть</string>
+    <string name="action_choose_btn">Записаться</string>
+    <string name="title_services">Услуги</string>
 </resources>

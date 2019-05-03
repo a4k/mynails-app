@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/card_height"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginBottom="@dimen/md_keylines"
     android:layout_marginLeft="@dimen/md_keylines"
@@ -15,18 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/card_image_height"
-            android:scaleType="centerCrop"
-            android:background="@drawable/loading_shape"
-            android:id="@+id/item_image" />
 
         <TextView
             android:id="@+id/item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/item_image"
             android:layout_marginLeft="@dimen/md_keylines"
             android:layout_marginTop="@dimen/md_keylines"
             android:layout_marginBottom="@dimen/md_keylines"
@@ -37,14 +30,6 @@
             android:textColor="@color/dark_grey"
             android:textSize="@dimen/article_subheading" />
 
-        <Button
-            android:id="@+id/action_view_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/item_title"
-            style="?android:attr/borderlessButtonStyle"
-            android:textColor="?attr/colorPrimary"
-            android:text="@string/view_master_text" />
 
 
     </RelativeLayout>
