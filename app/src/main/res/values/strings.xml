@@ -3,4 +3,5 @@
     <string name="todo">TODO</string>
     <string name="main_slogan_title">Запишитесь онлайн</string>
     <string name="choose_master_text">Выбрать мастера</string>
+    <string name="view_master_text">Посмотреть</string>
 </resources>

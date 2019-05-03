@@ -1,6 +1,7 @@
 package com.example.mynails.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -16,7 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mynails.R;
-import com.example.mynails.adapters.RecyclerViewAdapter;
+import com.example.mynails.adapters.MasterViewAdapter;
 import com.example.mynails.model.Config;
 import com.example.mynails.model.Master;
 
@@ -134,11 +135,31 @@ public class MasterAll extends AppCompatActivity {
 
     private void setUpRecyclerView(List<Master> listMasters) {
 
-        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this, listMasters);
+        MasterViewAdapter.OnItemClickListener listener = new BindListener();
+
+        MasterViewAdapter myAdapter = new MasterViewAdapter(this, listMasters, listener);
 
         viewMaster.setLayoutManager(new LinearLayoutManager(this));
 
         viewMaster.setAdapter(myAdapter);
 
+    }
+
+    public class BindListener implements MasterViewAdapter.OnItemClickListener {
+
+        @Override
+        public void onItemClick(Master item) {
+
+            int id = item.getId();
+
+            // Переход на страницу информации о мастере
+            Intent masterDetailPage = new Intent(MasterAll.this, MasterDetail.class);
+            masterDetailPage.putExtra("id", masterDetailPage);
+
+
+            startActivity(masterDetailPage);
+
+
+        }
     }
 }
