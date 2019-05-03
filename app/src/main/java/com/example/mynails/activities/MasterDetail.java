@@ -215,11 +215,7 @@ public class MasterDetail extends AppCompatActivity {
     public class BindListener implements ServiceViewAdapter.OnItemClickListener {
 
         @Override
-        public void onItemClick(Master item) {
-
-            int id = item.getId();
-
-
+        public void onItemClick(Service item) {
 
         }
     }
