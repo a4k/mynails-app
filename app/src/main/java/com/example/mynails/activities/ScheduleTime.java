@@ -170,14 +170,13 @@ public class ScheduleTime extends AppCompatActivity {
 
                         Schedule schedule = new Schedule();
                         schedule.setId(jsonObject.getInt("id"));
-                        schedule.setUser_id(jsonObject.getInt("user_id"));
                         schedule.setMaster_id(jsonObject.getInt("master_id"));
                         schedule.setService_id(jsonObject.getInt("service_id"));
                         schedule.setYear(jsonObject.getInt("year"));
                         schedule.setMaster_id(jsonObject.getInt("month"));
                         schedule.setDay(jsonObject.getInt("day"));
-                        schedule.setHour(jsonObject.getInt("hour"));
-                        schedule.setMinute(jsonObject.getInt("minute"));
+                        schedule.setHour(jsonObject.getString("hour"));
+                        schedule.setMinute(jsonObject.getString("minute"));
                         schedule.setType(jsonObject.getInt("type"));
 
                         listSchedule.add(schedule);
@@ -225,12 +224,12 @@ public class ScheduleTime extends AppCompatActivity {
 
             int id = item.getId();
 
-            // Переход на страницу информации о мастере
-            Intent masterDetailPage = new Intent(ScheduleTime.this, MasterDetail.class);
-            masterDetailPage.putExtra("id", id);
+            // Переход на страницу
+            Intent orderPage = new Intent(ScheduleTime.this, OrderActivity.class);
+            orderPage.putExtra("id", id);
 
 
-            startActivity(masterDetailPage);
+            startActivity(orderPage);
 
 
         }

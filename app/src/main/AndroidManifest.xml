@@ -12,7 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.OrderActivity"></activity>
+        <activity
+            android:name=".activities.OrderSuccess"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.OrderActivity"
+            android:parentActivityName=".activities.ScheduleTime"> >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ScheduleTime" />
+        </activity>
         <activity
             android:name=".activities.ScheduleTime"
             android:parentActivityName=".activities.MasterSchedule">

@@ -11,11 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mynails.R;
 import com.example.mynails.model.Config;
@@ -31,13 +35,18 @@ import java.util.Map;
 public class OrderActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PERMISSION_INTERNET = 101;
-
-    private JsonArrayRequest request;
+    private JsonObjectRequest request;
     private RequestQueue requestQueue;
     private Context mContext;
 
+    // Данные пользователя
     int scheduleId = 0;
+    String formNameValue = "";
+    String formPhoneValue = "";
 
+    // Элементы страницы
+    EditText nameInput;
+    EditText phoneInput;
     Button actionOrderBtn;
 
     @Override
@@ -51,12 +60,17 @@ public class OrderActivity extends AppCompatActivity {
         Intent intent = getIntent();
         scheduleId = intent.getIntExtra("id", 0);
 
+        nameInput = findViewById(R.id.form_name);
+        phoneInput = findViewById(R.id.form_phone);
         actionOrderBtn = findViewById(R.id.action_create_order);
 
 
         actionOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                formNameValue = nameInput.getText().toString();
+                formPhoneValue = phoneInput.getText().toString();
 
                 makeRequest();
 
@@ -101,7 +115,37 @@ public class OrderActivity extends AppCompatActivity {
 
         String api_method = "schedule.choose";
 
-        return api_url + api_method + "&schedule_id=" + scheduleId;
+
+        String strFilter = "";
+        StringBuilder filter = new StringBuilder(strFilter);
+
+        HashMap<String, String> arFilter = new HashMap<>();
+
+        if(scheduleId > 0) {
+            arFilter.put("schedule_id", scheduleId + "");
+        }
+        if(formNameValue.length() > 0) {
+            arFilter.put("name", formNameValue);
+        }
+        if(formPhoneValue.length() > 0) {
+            arFilter.put("phone", formPhoneValue);
+        }
+
+        for(Map.Entry<String, String> entry : arFilter.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+
+            if(filter.length() > 1) {
+                filter.append("&" + key + "=" + value);
+            } else {
+                filter.append(key + "=" + value);
+            }
+
+        }
+
+        strFilter = filter.toString();
+
+        return api_url + api_method + "&" + strFilter;
 
     }
 
@@ -109,19 +153,39 @@ public class OrderActivity extends AppCompatActivity {
     // отправка запроса
     private void jsonRequest(String url) {
 
-        request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+        request = new JsonObjectRequest(Request.Method.GET,
+                url, null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONObject response) {
 
                 // запрос отправлен
 
-                // todo перенаправить на успешную страницу
+                try {
+
+                    Boolean result = response.getBoolean("result");
+
+                    if(result) {
+
+                        openSuccessPage();
+
+                    } else {
+
+                        showErrorMessage();
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    showErrorMessage();
+                }
+
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                showErrorMessage();
 
             }
         });
@@ -129,6 +193,22 @@ public class OrderActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(OrderActivity.this);
         requestQueue.add(request);
+
+    }
+
+    private void showErrorMessage() {
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Возникла ошибка",
+                Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    private void openSuccessPage() {
+
+        // Переход на страницу успеха
+        Intent masterDetailPage = new Intent(OrderActivity.this, OrderSuccess.class);
+
+        startActivity(masterDetailPage);
 
     }
 
