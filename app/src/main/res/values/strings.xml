@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">MyNails</string>
+    <string name="todo">TODO</string>
+    <string name="main_slogan_title">Запишитесь онлайн</string>
+    <string name="choose_master_text">Выбрать мастера</string>
+    <string name="view_master_text">Посмотреть</string>
+    <string name="action_choose_btn">Записаться</string>
+    <string name="title_services">Услуги</string>
+    <string name="empty_text">Пусто</string>
+    <string name="hint_name">Имя</string>
+    <string name="hint_phone">Телефон</string>
+    <string name="form_order_title">Запись к мастеру</string>
+    <string name="order_success_text">Вы успешно записались</string>
 </resources>

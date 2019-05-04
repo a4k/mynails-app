@@ -8,4 +8,27 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Heading">
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+    <style name="HeadingTitle">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="ItemSideLeft">
+        <item name="android:layout_marginRight">20dp</item>
+    </style>
+
+    <style name="ItemSideRight">
+
+    </style>
+
+    <style name="Button">
+        <item name="android:background">@drawable/button</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="Wrapper">
+        <item name="android:layout_marginBottom">35dp</item>
+    </style>
+
 </resources>
