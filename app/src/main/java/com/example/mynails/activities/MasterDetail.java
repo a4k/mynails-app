@@ -181,8 +181,6 @@ public class MasterDetail extends AppCompatActivity {
                 }
 
 
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -216,6 +214,14 @@ public class MasterDetail extends AppCompatActivity {
 
         @Override
         public void onItemClick(Service item) {
+
+            int id = item.getId();
+
+            // Переход на страницу информации о мастере
+            Intent masterSchedule = new Intent(MasterDetail.this, MasterSchedule.class);
+            masterSchedule.putExtra("id", id);
+
+            startActivity(masterSchedule);
 
         }
     }

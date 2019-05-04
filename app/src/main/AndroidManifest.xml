@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".activities.MasterSchedule"></activity>
         <activity
             android:name=".activities.MasterDetail"
             android:parentActivityName=".activities.MasterAll">
@@ -20,7 +20,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MasterAll" />
         </activity>
-
         <activity
             android:name=".activities.MasterAll"
             android:parentActivityName=".activities.MainActivity">
@@ -28,7 +27,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
-
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

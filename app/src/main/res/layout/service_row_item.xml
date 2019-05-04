@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
@@ -8,27 +8,18 @@
     android:layout_gravity="center"
     android:layout_marginBottom="@dimen/md_keylines"
     android:layout_marginLeft="@dimen/md_keylines"
-    android:layout_marginRight="@dimen/md_keylines"
-    android:foreground="?attr/selectableItemBackground">
+    android:layout_marginRight="@dimen/md_keylines">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/item_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_keylines"
+        android:layout_marginBottom="@dimen/md_keylines"
+        android:text="@string/app_name"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/dark_grey"
+        android:textSize="@dimen/article_subheading" />
 
-
-        <TextView
-            android:id="@+id/item_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/md_keylines"
-            android:layout_marginBottom="@dimen/md_keylines"
-            android:text="@string/app_name"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textColor="@color/dark_grey"
-            android:textSize="@dimen/article_subheading" />
-
-
-
-    </RelativeLayout>
-</android.support.v7.widget.CardView>
+</LinearLayout>

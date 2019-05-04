@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.MasterSchedule">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/md_keylines"
+            android:layout_marginBottom="@dimen/md_keylines"
+            android:text="Выберите дату"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <CalendarView
+            android:id="@+id/calendarSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </CalendarView>
+    </LinearLayout>
+</LinearLayout>

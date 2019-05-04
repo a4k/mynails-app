@@ -116,7 +116,6 @@
                 android:layout_below="@+id/service_title"
                 android:clipToPadding="false"
                 android:scrollbars="vertical"
-                android:paddingTop="20dp"
                 android:id="@+id/serviceList">
 
             </android.support.v7.widget.RecyclerView>
