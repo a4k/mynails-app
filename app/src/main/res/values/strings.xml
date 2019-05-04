@@ -6,4 +6,8 @@
     <string name="view_master_text">Посмотреть</string>
     <string name="action_choose_btn">Записаться</string>
     <string name="title_services">Услуги</string>
+    <string name="empty_text">Пусто</string>
+    <string name="hint_name">Имя</string>
+    <string name="hint_phone">Телефон</string>
+    <string name="form_order_title">Запись к мастеру</string>
 </resources>

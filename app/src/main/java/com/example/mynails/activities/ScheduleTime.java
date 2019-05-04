@@ -9,6 +9,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,6 +21,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mynails.R;
+import com.example.mynails.adapters.MasterViewAdapter;
+import com.example.mynails.adapters.ScheduleTimeViewAdapter;
 import com.example.mynails.model.Config;
 import com.example.mynails.model.Master;
 import com.example.mynails.model.Schedule;
@@ -27,27 +31,29 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ScheduleTime extends AppCompatActivity {
 
-
     private static final int REQUEST_CODE_PERMISSION_INTERNET = 101;
 
-    private JsonObjectRequest request;
+    private JsonArrayRequest request;
     private RequestQueue requestQueue;
-    private RequestOptions req_options;
-
     private Context mContext;
 
-    int reqDay = 0;
-    int reqMonth = 0;
-    int reqYear = 0;
+    private List<Schedule> listSchedule;
+    private RecyclerView viewSchedule;
+
 
     int id = 0;
     int masterId = 0;
     int serviceId = 0;
+    int reqDay = 0;
+    int reqMonth = 0;
+    int reqYear = 0;
 
 
     @Override
@@ -67,11 +73,10 @@ public class ScheduleTime extends AppCompatActivity {
         reqDay = intent.getIntExtra("day", 0);
 
 
+        listSchedule = new ArrayList<>();
+        viewSchedule = findViewById(R.id.scheduleList);
 
-    }
 
-
-    public void makeRequest() {
         int permissionStatus = ContextCompat.checkSelfPermission(mContext, Manifest.permission.INTERNET);
 
         if (permissionStatus == PackageManager.PERMISSION_GRANTED && permissionStatus != 0) {
@@ -81,7 +86,9 @@ public class ScheduleTime extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.INTERNET},
                     REQUEST_CODE_PERMISSION_INTERNET);
         }
+
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -104,7 +111,7 @@ public class ScheduleTime extends AppCompatActivity {
         Config config = new Config();
         String api_url = config.getApi_url();
 
-        String api_method = "master.get";
+        String api_method = "schedule.filter";
 
         String strFilter = "";
         StringBuilder filter = new StringBuilder(strFilter);
@@ -160,14 +167,20 @@ public class ScheduleTime extends AppCompatActivity {
 
                     try {
                         jsonObject = response.getJSONObject(i);
-                        Master master = new Master();
-                        master.setId(jsonObject.getInt("id"));
-                        master.setName(jsonObject.getString("name"));
-                        master.setPhone(jsonObject.getString("phone"));
-                        master.setDescription(jsonObject.getString("description"));
-                        master.setImage(jsonObject.getString("image"));
 
-                        listMasters.add(master);
+                        Schedule schedule = new Schedule();
+                        schedule.setId(jsonObject.getInt("id"));
+                        schedule.setUser_id(jsonObject.getInt("user_id"));
+                        schedule.setMaster_id(jsonObject.getInt("master_id"));
+                        schedule.setService_id(jsonObject.getInt("service_id"));
+                        schedule.setYear(jsonObject.getInt("year"));
+                        schedule.setMaster_id(jsonObject.getInt("month"));
+                        schedule.setDay(jsonObject.getInt("day"));
+                        schedule.setHour(jsonObject.getInt("hour"));
+                        schedule.setMinute(jsonObject.getInt("minute"));
+                        schedule.setType(jsonObject.getInt("type"));
+
+                        listSchedule.add(schedule);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -175,7 +188,7 @@ public class ScheduleTime extends AppCompatActivity {
 
                 }
 
-                setUpRecyclerView(listMasters);
+                setUpRecyclerView(listSchedule);
 
             }
         }, new Response.ErrorListener() {
@@ -191,6 +204,38 @@ public class ScheduleTime extends AppCompatActivity {
         requestQueue.add(request);
 
     }
+
+    private void setUpRecyclerView(List<Schedule> listSchedule) {
+
+        ScheduleTimeViewAdapter.OnItemClickListener listener = new ScheduleTime.BindListener();
+
+        ScheduleTimeViewAdapter myAdapter = new ScheduleTimeViewAdapter(this, listSchedule, listener);
+
+        viewSchedule.setLayoutManager(new LinearLayoutManager(this));
+
+        viewSchedule.setAdapter(myAdapter);
+
+    }
+
+
+    public class BindListener implements ScheduleTimeViewAdapter.OnItemClickListener {
+
+        @Override
+        public void onItemClick(Schedule item) {
+
+            int id = item.getId();
+
+            // Переход на страницу информации о мастере
+            Intent masterDetailPage = new Intent(ScheduleTime.this, MasterDetail.class);
+            masterDetailPage.putExtra("id", id);
+
+
+            startActivity(masterDetailPage);
+
+
+        }
+    }
+
 
 
 }

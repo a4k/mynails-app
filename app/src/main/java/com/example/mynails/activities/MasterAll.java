@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,15 +34,13 @@ public class MasterAll extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PERMISSION_INTERNET = 101;
 
-    private Config config;
-    private String api_url;
-    private String api_method = "master.all";
-
     private JsonArrayRequest request;
     private RequestQueue requestQueue;
 
     private List<Master> listMasters;
     private RecyclerView viewMaster;
+
+    LinearLayout notFindLayout;
 
 
     @Override
@@ -48,25 +48,37 @@ public class MasterAll extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master_all);
 
-        config = new Config();
-
-        api_url = config.getApi_url();
-        String url = api_url + api_method;
 
         listMasters = new ArrayList<>();
         viewMaster = findViewById(R.id.mastersList);
+
+        notFindLayout = findViewById(R.id.not_find);
 
         int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
 
         if (permissionStatus == PackageManager.PERMISSION_GRANTED && permissionStatus != 0) {
             // Получение списка
-            jsonRequest(url);
+            jsonRequest(getApiUrl());
         } else {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.INTERNET},
                     REQUEST_CODE_PERMISSION_INTERNET);
         }
 
 
+    }
+
+    public String getApiUrl() {
+
+        Config config = new Config();
+        String api_url = config.getApi_url();
+        String api_method = "master.all";
+
+        return api_url + api_method;
+
+    }
+
+    private void showNotFind() {
+        notFindLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -77,11 +89,8 @@ public class MasterAll extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission granted
 
-                    api_url = config.getApi_url();
-                    String url = api_url + api_method;
-
                     // Получение списка
-                    jsonRequest(url);
+                    jsonRequest(getApiUrl());
                 }
 
         }
@@ -110,6 +119,8 @@ public class MasterAll extends AppCompatActivity {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        showNotFind();
+
                     }
 
                 }
@@ -121,6 +132,7 @@ public class MasterAll extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                showNotFind();
 
             }
         });
