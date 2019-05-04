@@ -157,6 +157,9 @@ public class MasterDetail extends AppCompatActivity {
                             service.setPrice(jsonObject.getInt("price"));
                             service.setTime(jsonObject.getInt("time"));
 
+                            service.setMaster_id(jsonObject.getInt("master_id"));
+                            service.setService_id(jsonObject.getInt("service_id"));
+
                             listServices.add(service);
 
                         }
@@ -216,10 +219,14 @@ public class MasterDetail extends AppCompatActivity {
         public void onItemClick(Service item) {
 
             int id = item.getId();
+            int master_id = item.getMaster_id();
+            int service_id = item.getService_id();
 
             // Переход на страницу информации о мастере
             Intent masterSchedule = new Intent(MasterDetail.this, MasterSchedule.class);
             masterSchedule.putExtra("id", id);
+            masterSchedule.putExtra("master_id", master_id);
+            masterSchedule.putExtra("service_id", service_id);
 
             startActivity(masterSchedule);
 

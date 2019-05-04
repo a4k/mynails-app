@@ -7,6 +7,9 @@ public class Service {
     private int price;
     private int time;
 
+    private int master_id;
+    private int service_id;
+
 
 
     public Service() {
@@ -38,6 +41,15 @@ public class Service {
         return time;
     }
 
+    public int getMaster_id() {
+        return master_id;
+    }
+
+    public int getService_id() {
+        return service_id;
+    }
+
+
     // setter
     public void setId(int id) {
         this.id = id;
@@ -53,6 +65,14 @@ public class Service {
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+    public void setMaster_id(int master_id) {
+        this.master_id = master_id;
+    }
+
+    public void setService_id(int service_id) {
+        this.service_id = service_id;
     }
 
 }
